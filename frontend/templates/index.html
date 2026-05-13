@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">◎</span>
+        <span class="logo-text">ResearchAgent</span>
+      </div>
+      <div class="header-badge">Powered by Claude</div>
+    </div>
+  </header>
+
+  <!-- ── HERO / SEARCH ──────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Deep Research,<br /><em>Instantly.</em>
+      </h1>
+      <p class="hero-sub">
+        Enter any topic. The agent searches the web, reads the sources,
+        and delivers a structured report with citations — in seconds.
+      </p>
+
+      <div class="search-box" id="searchBox">
+        <input
+          type="text"
+          id="topicInput"
+          placeholder="e.g. &quot;Impact of microplastics on human health&quot;"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <div class="search-options">
+          <label for="numSources">Sources to scan</label>
+          <select id="numSources">
+            <option value="4">4</option>
+            <option value="6" selected>6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <button id="searchBtn" onclick="startResearch()">
+          <span class="btn-text">Research</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+
+      <div class="example-topics">
+        <span class="examples-label">Try:</span>
+        <button class="example-chip" onclick="setTopic(this)">Quantum computing breakthroughs 2024</button>
+        <button class="example-chip" onclick="setTopic(this)">Effects of social media on teenagers</button>
+        <button class="example-chip" onclick="setTopic(this)">Future of electric vehicles</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRESS ───────────────────────────────── -->
+  <div class="progress-area" id="progressArea" style="display:none">
+    <div class="progress-card">
+      <div class="spinner"></div>
+      <div class="progress-steps" id="progressSteps">
+        <div class="step active" id="step1">
+          <span class="step-dot"></span>
+          <span>Searching the web…</span>
+        </div>
+        <div class="step" id="step2">
+          <span class="step-dot"></span>
+          <span>Reading sources…</span>
+        </div>
+        <div class="step" id="step3">
+          <span class="step-dot"></span>
+          <span>Synthesizing report…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REPORT OUTPUT ──────────────────────────── -->
+  <main class="report-area" id="reportArea" style="display:none">
+
+    <!-- Meta bar -->
+    <div class="report-meta" id="reportMeta"></div>
+
+    <!-- Report layout: main + sidebar -->
+    <div class="report-layout">
+
+      <!-- LEFT: Report content -->
+      <article class="report-body" id="reportBody"></article>
+
+      <!-- RIGHT: Sidebar -->
+      <aside class="report-sidebar">
+        <div class="sidebar-section" id="keyFactsBox" style="display:none">
+          <h3 class="sidebar-heading">Key Facts</h3>
+          <ul class="key-facts-list" id="keyFactsList"></ul>
+        </div>
+        <div class="sidebar-section" id="citationsBox" style="display:none">
+          <h3 class="sidebar-heading">Sources</h3>
+          <ol class="citations-list" id="citationsList"></ol>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Export button -->
+    <div class="export-bar">
+      <button class="export-btn" onclick="exportMarkdown()">Export as Markdown</button>
+      <button class="new-btn" onclick="resetUI()">New Research</button>
+    </div>
+  </main>
+
+  <!-- ── ERROR ──────────────────────────────────── -->
+  <div class="error-area" id="errorArea" style="display:none">
+    <div class="error-card">
+      <span class="error-icon">⚠</span>
+      <p id="errorMessage"></p>
+      <button onclick="resetUI()">Try Again</button>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
